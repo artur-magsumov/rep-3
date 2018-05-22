@@ -21,6 +21,7 @@ def read_db():
     with conn.cursor(pymysql.cursors.DictCursor) as cursor:
         cursor.execute(query)
         data = cursor.fetchall()
+
     for idx, item in enumerate(data):
         try:
             validate(item, schema)
@@ -28,6 +29,5 @@ def read_db():
             return str(json.dumps(data, indent=4)).encode("utf8")
         except jsonschema.exceptions.ValidationError as ve:
             return b'error'
-
 if __name__ == "__main__":
     print(read_db())
