@@ -1,7 +1,15 @@
+'''
+    Это файлик с неудачным названием :)
+    Здесь хранится код для того что бы заполнить csv
+    файл в котором следует дозаполнить таблицу обращаясь
+    к БД MySql
+'''
+
 import pymysql
 import csv
 import re
 data_list = []
+
 def get_pattern_and_acc_num_from_database():
     '''Получаем pattern и account_number из таблицы базы данных
        в виде кортежей'''
@@ -15,13 +23,14 @@ def get_pattern_and_acc_num_from_database():
     return cur.fetchall()
     
 def create_list_from_csv(csvfile):
-
+    data_list.clear()
     reader = csv.reader(csvfile, delimiter=';')
-
+    print(reader)
     for line in reader:
         data_list.append(line)
     
 def appending_values_to_acc_num():
+    print(data_list)
     for i in data_list:
         if i[4]:
             continue
@@ -42,9 +51,10 @@ def open_csv(csvfilename):
     with open(csvfilename) as filename:
         create_list_from_csv(filename)
 
-##if __name__ == "__main__":
-##values_from_database = get_pattern_and_acc_num_from_database()
-##      open_csv()
-##    appending_values_to_acc_num()
-##    write_new_data_to_csv()
-get_pattern_and_acc_num_from_database()
+def main_mysql(name):
+    get_pattern_and_acc_num_from_database()
+    open_csv(name)
+    appending_values_to_acc_num()
+    write_new_data_to_csv(name)
+if __name__ == "__main__":
+    main()
